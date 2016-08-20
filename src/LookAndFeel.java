@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.UIDefaults;
@@ -17,6 +18,8 @@ public class LookAndFeel
 {
 	private UIDefaults def = null;
 
+	private Map<Object, Object> keyValueMap = new HashMap<Object, Object>();
+
 	public static final String NIMBUS = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
 
 	private String lookAndFeelName = NIMBUS;
@@ -24,9 +27,10 @@ public class LookAndFeel
 	private Color bttbgcol = Color.BLUE, bttfgcol = Color.WHITE,
 			control = Color.WHITE, tooltptxtcol = Color.BLACK,
 			tooltpbg = Color.WHITE, tooltpborder = Color.DARK_GRAY,
-			pbfgcol = Color.BLUE, pbbgcol = Color.LIGHT_GRAY,
+			pbfgcol = Color.BLUE, pbbgcol = new Color(235, 235, 235),
 			cbbgcol = Color.WHITE, cbfgcol = Color.BLACK,
-			cbselbgcol = Color.BLUE, cbselfgcol = Color.WHITE;
+			cbselbgcol = Color.BLUE, cbselfgcol = Color.WHITE,
+			pbborder = Color.GRAY;
 	private Font bttft = new Font("Tahoma", Font.BOLD, 12),
 			cbft = new Font("Tahoma", Font.BOLD, 12),
 			pbft = new Font("Tahoma", Font.BOLD, 12),
@@ -73,23 +77,27 @@ public class LookAndFeel
 	public void setLookAndFeel()
 	{
 		// http://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html#primary
-		try
+		if (this.def == null)
 		{
-			UIManager.setLookAndFeel(this.lookAndFeelName);
-		} catch (ClassNotFoundException | InstantiationException
-				| IllegalAccessException | UnsupportedLookAndFeelException e)
-		{
-			e.printStackTrace();
-			return;
+			try
+			{
+				UIManager.setLookAndFeel(this.lookAndFeelName);
+			} catch (ClassNotFoundException | InstantiationException
+					| IllegalAccessException
+					| UnsupportedLookAndFeelException e)
+			{
+				e.printStackTrace();
+				return;
+			}
+
+			this.def = UIManager.getLookAndFeelDefaults();
 		}
 
-		def = UIManager.getLookAndFeelDefaults();
+		this.def.put("Button.background", this.bttbgcol);
+		this.def.put("Button.font", this.bttft);
+		this.def.put("Button.textForeground", this.bttfgcol);
 
-		def.put("Button.background", this.bttbgcol);
-		def.put("Button.font", this.bttft);
-		def.put("Button.textForeground", this.bttfgcol);
-
-		def.put("ComboBox.font", this.cbft);
+		this.def.put("ComboBox.font", this.cbft);
 		UIManager.put("ComboBox.background", new ColorUIResource(this.cbbgcol));
 		UIManager.put("ComboBox.foreground", new ColorUIResource(this.cbfgcol));
 		UIManager.put("ComboBox.selectionBackground",
@@ -97,27 +105,29 @@ public class LookAndFeel
 		UIManager.put("ComboBox.selectionForeground",
 				new ColorUIResource(this.cbselfgcol));
 
-		def.put("ProgressBar.font", this.pbft);
+		this.def.put("ProgressBar.font", this.pbft);
 		UIManager.put("ProgressBar.foreground", this.pbfgcol);
 		UIManager.put("ProgressBar.selectionForeground", this.pbfgcol);
-		def.put("ProgressBar[Enabled].foregroundPainter",
-				new ProgressBarPainter(this.pbfgcol));
-		def.put("ProgressBar[Enabled+Finished].foregroundPainter",
-				new ProgressBarPainter(this.pbfgcol));
+		this.def.put("ProgressBar[Enabled].foregroundPainter",
+				new ProgressBarPainter(this.pbfgcol, null));
+		this.def.put("ProgressBar[Enabled+Finished].foregroundPainter",
+				new ProgressBarPainter(this.pbfgcol, null));
 		UIManager.put("ProgressBar.background", this.pbbgcol);
 		UIManager.put("ProgressBar.selectionBackground", this.pbbgcol);
-		def.put("ProgressBar[Enabled].backgroundPainter",
-				new ProgressBarPainter(this.pbbgcol));
-		def.put("ProgressBar[Enabled+Finished].backgroundPainter",
-				new ProgressBarPainter(this.pbbgcol));
+		this.def.put("ProgressBar[Enabled].backgroundPainter",
+				new ProgressBarPainter(this.pbbgcol, this.pbborder));
+		this.def.put("ProgressBar[Enabled+Finished].backgroundPainter",
+				new ProgressBarPainter(this.pbbgcol, this.pbborder));
 
-		def.put("ToolTip.textForeground", this.tooltptxtcol);
-		def.put("ToolTip[Enabled].backgroundPainter",
+		this.def.put("ToolTip.textForeground", this.tooltptxtcol);
+		this.def.put("ToolTip[Enabled].backgroundPainter",
 				new ToolTipBackgroundPainter(1, this.tooltpbg,
 						this.tooltpborder));
-		def.put("ToolTip.font", this.tooltptxtft);
+		this.def.put("ToolTip.font", this.tooltptxtft);
 
 		UIManager.put("control", this.control);
+
+		this.def.putAll(this.keyValueMap);
 	}
 
 	/**
@@ -130,11 +140,12 @@ public class LookAndFeel
 	 * @throws IllegalAccessException
 	 * @throws UnsupportedLookAndFeelException
 	 */
-	public void setLookAndFeelName(String lookAndFeel)
+	public void setLookAndFeelName(String lookAndFeelName)
 			throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException, UnsupportedLookAndFeelException
 	{
-		UIManager.setLookAndFeel(lookAndFeel);
+		if (lookAndFeelName != null)
+			this.lookAndFeelName = lookAndFeelName;
 	}
 
 	/**
@@ -212,12 +223,15 @@ public class LookAndFeel
 	 * @param font
 	 *            Schrifteinstellungen
 	 */
-	public void setProgressBar(Color foreground, Color background, Font font)
+	public void setProgressBar(Color foreground, Color background, Color border,
+			Font font)
 	{
 		if (foreground != null)
 			this.pbfgcol = foreground;
 		if (background != null)
 			this.pbbgcol = background;
+		if (border != null)
+			this.pbborder = border;
 		if (font != null)
 			this.pbft = font;
 	}
@@ -262,18 +276,7 @@ public class LookAndFeel
 	 */
 	public void putUIDefault(Object key, Object value)
 	{
-		def.put(key, value);
-	}
-
-	/**
-	 * Ruft die PUTDEFAULTS()-Methode der UIDefaults auf
-	 * 
-	 * @param keyValueList
-	 *            Object-Array mit Werten für die UIDefaults
-	 */
-	public void putDefaultsUIDefault(Object[] keyValueList)
-	{
-		def.putDefaults(keyValueList);
+		this.keyValueMap.put(key, value);
 	}
 
 	/**
@@ -282,9 +285,8 @@ public class LookAndFeel
 	 * @param keyValueMap
 	 *            Map mit Werten für die UIDefaults
 	 */
-	public void putAllUIDefault(
-			Map<? extends Object, ? extends Object> keyValueMap)
+	public void putAllUIDefault(Map<Object, Object> keyValueMap)
 	{
-		def.putAll(keyValueMap);
+		this.keyValueMap.putAll(keyValueMap);
 	}
 }
