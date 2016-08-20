@@ -4,14 +4,10 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import javax.swing.JComponent;
-import javax.swing.UIManager;
-import javax.swing.plaf.nimbus.AbstractRegionPainter;
 
-final class ToolTipBackgroundPainter extends AbstractRegionPainter
+final class ToolTipBackgroundPainter extends AbstractLookAndFeelRegionPainter
 {
 	// package private integers representing the available states that
 	// this painter will paint. These are used when creating a new instance
@@ -20,7 +16,6 @@ final class ToolTipBackgroundPainter extends AbstractRegionPainter
 	static final int BACKGROUND_ENABLED = 1;
 
 	private int state; // refers to one of the static final ints above
-	private PaintContext ctx;
 
 	// the following 4 variables are reused during the painting code of the
 	// layers
@@ -49,28 +44,6 @@ final class ToolTipBackgroundPainter extends AbstractRegionPainter
 	{
 		super();
 		this.state = state;
-		// refelction for getting the PaintContext
-		AbstractRegionPainter abstractPainter = (AbstractRegionPainter) UIManager
-				.get("ToolTip[Enabled].backgroundPainter");
-		Class<?> clazz = abstractPainter.getClass();
-		Method protectedMethod = null;
-		try
-		{
-			protectedMethod = clazz.getDeclaredMethod("getPaintContext");
-		} catch (NoSuchMethodException | SecurityException e)
-		{
-			e.printStackTrace();
-		}
-		protectedMethod.setAccessible(true);
-
-		try
-		{
-			this.ctx = (PaintContext) protectedMethod.invoke(abstractPainter);
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException e)
-		{
-			e.printStackTrace();
-		}
 
 		if (nimbusBorder != null)
 			this.color1 = nimbusBorder;
@@ -95,12 +68,6 @@ final class ToolTipBackgroundPainter extends AbstractRegionPainter
 			break;
 
 		}
-	}
-
-	@Override
-	protected final PaintContext getPaintContext()
-	{
-		return ctx;
 	}
 
 	private void paintBackgroundEnabled(Graphics2D g)

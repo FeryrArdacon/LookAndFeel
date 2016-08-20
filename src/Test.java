@@ -9,17 +9,14 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class Test
 {
 
-	private static String lookAndFeel = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
-
-	public static void main(String[] args) throws ClassNotFoundException,
-			InstantiationException, IllegalAccessException,
-			UnsupportedLookAndFeelException
+	public static void main(String[] args)
+			throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException, UnsupportedLookAndFeelException
 	{
-		LookAndFeel laf = new LookAndFeel(false);
-		laf.setLookAndFeel(lookAndFeel);
-		laf.setProgressBar(Color.GREEN, Color.GRAY, null);
+		LookAndFeel laf = new LookAndFeel();
 		laf.setComboBox(Color.BLACK, Color.WHITE, null);
 		laf.setToolTip(Color.WHITE, Color.DARK_GRAY, Color.BLACK, null);
+		laf.setLookAndFeel();
 
 		JFrame frame = new JFrame("Test");
 

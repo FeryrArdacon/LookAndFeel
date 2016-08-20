@@ -17,14 +17,20 @@ public class LookAndFeel
 {
 	private UIDefaults def = null;
 
-	private String lookAndFeel = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
+	public static final String NIMBUS = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
 
-	private Color bttbg = Color.BLUE, bttfg = Color.WHITE,
+	private String lookAndFeelName = NIMBUS;
+
+	private Color bttbgcol = Color.BLUE, bttfgcol = Color.WHITE,
 			control = Color.WHITE, tooltptxtcol = Color.BLACK,
-			tooltpbg = Color.WHITE, tooltpborder = Color.DARK_GRAY;
-	private Font bttft = new Font("Tahoma", Font.BOLD, 12), cbft = new Font(
-			"Tahoma", Font.BOLD, 12), pbft = new Font("Tahoma", Font.BOLD, 12),
-			tooltptxtft = new Font("Tahoma", Font.PLAIN, 11);
+			tooltpbg = Color.WHITE, tooltpborder = Color.DARK_GRAY,
+			pbfgcol = Color.BLUE, pbbgcol = Color.LIGHT_GRAY,
+			cbbgcol = Color.WHITE, cbfgcol = Color.BLACK,
+			cbselbgcol = Color.BLUE, cbselfgcol = Color.WHITE;
+	private Font bttft = new Font("Tahoma", Font.BOLD, 12),
+			cbft = new Font("Tahoma", Font.BOLD, 12),
+			pbft = new Font("Tahoma", Font.BOLD, 12),
+			tooltptxtft = new Font("Tahoma", Font.PLAIN, 12);
 
 	/**
 	 * Setzt ein Standard LookAndFeel
@@ -32,23 +38,6 @@ public class LookAndFeel
 	public LookAndFeel()
 	{
 		super();
-		this.setLookAndFeel();
-	}
-
-	/**
-	 * Creiert das Objekt der Klasse und setzt ein Standard LookAndFeel, wenn
-	 * der Parameter setDefaults true ist
-	 * 
-	 * @param setDefaults
-	 *            Bei true wird ein Standard LookAndFeel gesetzt
-	 */
-	public LookAndFeel(boolean setDefaults)
-	{
-		super();
-		if (setDefaults)
-			this.setLookAndFeel();
-		else
-			def = UIManager.getLookAndFeelDefaults();
 	}
 
 	/**
@@ -61,118 +50,7 @@ public class LookAndFeel
 	{
 		super();
 		if (lookAndFeel != null && !lookAndFeel.equals(""))
-			this.lookAndFeel = lookAndFeel;
-		this.setLookAndFeel();
-	}
-
-	/**
-	 * Setzt ein LookAndFeel mit den übergebenen Parametern. Ist ein Parameter
-	 * NULL, wird für diesen der Standardwert benutzt.
-	 * 
-	 * @param lookAndFeel
-	 *            LookAndFeel
-	 * @param bttbg
-	 *            Button Hintergrundfabe
-	 * @param bttfg
-	 *            Button Vordergrundfarbe
-	 * @param bttft
-	 *            Button Schrifteinstellungen
-	 * @param control
-	 *            Control-Farbe (Hintergrund von Panels und Frames)
-	 * @param tooltptxtcol
-	 *            ToolTip Textfarbe
-	 * @param tooltpbg
-	 *            ToolTip Hintergrundfarbe
-	 * @param tooltpborder
-	 *            ToolTip Rahmenfarbe
-	 * @param tooltptxtft
-	 *            ToolTip Schriftrinstellungen
-	 * @param cbft
-	 *            ComboBox Schrifteinstellungen
-	 * @param pbft
-	 *            ProgressBar Schrifteinstellungen
-	 */
-	public LookAndFeel(Color bttbg, Color bttfg, Font bttft, Color control,
-			Color tooltptxtcol, Color tooltpbg, Color tooltpborder,
-			Font tooltptxtft, Font cbft, Font pbft)
-	{
-		super();
-		if (bttbg != null)
-			this.bttbg = bttbg;
-		if (bttfg != null)
-			this.bttfg = bttfg;
-		if (control != null)
-			this.control = control;
-		if (tooltptxtcol != null)
-			this.tooltptxtcol = tooltptxtcol;
-		if (tooltpbg != null)
-			this.tooltpbg = tooltpbg;
-		if (tooltpborder != null)
-			this.tooltpborder = tooltpborder;
-		if (bttft != null)
-			this.bttft = bttft;
-		if (cbft != null)
-			this.cbft = cbft;
-		if (pbft != null)
-			this.pbft = pbft;
-		if (tooltptxtft != null)
-			this.tooltptxtft = tooltptxtft;
-		this.setLookAndFeel();
-	}
-
-	/**
-	 * Setzt ein LookAndFeel mit den übergebenen Parametern. Ist ein Parameter
-	 * NULL, wird für diesen der Standardwert benutzt.
-	 * 
-	 * @param bttbg
-	 *            Button Hintergrundfabe
-	 * @param bttfg
-	 *            Button Vordergrundfarbe
-	 * @param bttft
-	 *            Button Schrifteinstellungen
-	 * @param control
-	 *            Control-Farbe (Hintergrund von Panels und Frames)
-	 * @param tooltptxtcol
-	 *            ToolTip Textfarbe
-	 * @param tooltpbg
-	 *            ToolTip Hintergrundfarbe
-	 * @param tooltpborder
-	 *            ToolTip Rahmenfarbe
-	 * @param tooltptxtft
-	 *            ToolTip Schriftrinstellungen
-	 * @param cbft
-	 *            ComboBox Schrifteinstellungen
-	 * @param pbft
-	 *            ProgressBar Schrifteinstellungen
-	 */
-	public LookAndFeel(String lookAndFeel, Color bttbg, Color bttfg,
-			Font bttft, Color control, Color tooltptxtcol, Color tooltpbg,
-			Color tooltpborder, Font tooltptxtft, Font cbft, Font pbft)
-	{
-		super();
-		if (lookAndFeel != null && !lookAndFeel.equals(""))
-			this.lookAndFeel = lookAndFeel;
-		if (bttbg != null)
-			this.bttbg = bttbg;
-		if (bttfg != null)
-			this.bttfg = bttfg;
-		if (control != null)
-			this.control = control;
-		if (tooltptxtcol != null)
-			this.tooltptxtcol = tooltptxtcol;
-		if (tooltpbg != null)
-			this.tooltpbg = tooltpbg;
-		if (tooltpborder != null)
-			this.tooltpborder = tooltpborder;
-		if (bttft != null)
-			this.bttft = bttft;
-		if (cbft != null)
-			this.cbft = cbft;
-		if (pbft != null)
-			this.pbft = pbft;
-		if (tooltptxtft != null)
-			this.tooltptxtft = tooltptxtft;
-		this.setLookAndFeel();
+			this.lookAndFeelName = lookAndFeel;
 	}
 
 	/**
@@ -186,20 +64,18 @@ public class LookAndFeel
 		super();
 		if (def != null)
 			this.def = def;
-		else
-			this.setLookAndFeel();
 	}
 
 	/**
-	 * Setzt die UIDefaults für Buttons, Comboboxen, Progressbars, Tooltips und
-	 * Controls
+	 * Setzt die Einstellungen für Buttons, Comboboxen, Progressbars, Tooltips
+	 * und Controls in Kraft
 	 */
-	private void setLookAndFeel()
+	public void setLookAndFeel()
 	{
 		// http://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html#primary
 		try
 		{
-			UIManager.setLookAndFeel(this.lookAndFeel);
+			UIManager.setLookAndFeel(this.lookAndFeelName);
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e)
 		{
@@ -209,13 +85,31 @@ public class LookAndFeel
 
 		def = UIManager.getLookAndFeelDefaults();
 
-		def.put("Button.background", this.bttbg);
+		def.put("Button.background", this.bttbgcol);
 		def.put("Button.font", this.bttft);
-		def.put("Button.textForeground", this.bttfg);
+		def.put("Button.textForeground", this.bttfgcol);
 
 		def.put("ComboBox.font", this.cbft);
+		UIManager.put("ComboBox.background", new ColorUIResource(this.cbbgcol));
+		UIManager.put("ComboBox.foreground", new ColorUIResource(this.cbfgcol));
+		UIManager.put("ComboBox.selectionBackground",
+				new ColorUIResource(this.cbselbgcol));
+		UIManager.put("ComboBox.selectionForeground",
+				new ColorUIResource(this.cbselfgcol));
 
 		def.put("ProgressBar.font", this.pbft);
+		UIManager.put("ProgressBar.foreground", this.pbfgcol);
+		UIManager.put("ProgressBar.selectionForeground", this.pbfgcol);
+		def.put("ProgressBar[Enabled].foregroundPainter",
+				new ProgressBarPainter(this.pbfgcol));
+		def.put("ProgressBar[Enabled+Finished].foregroundPainter",
+				new ProgressBarPainter(this.pbfgcol));
+		UIManager.put("ProgressBar.background", this.pbbgcol);
+		UIManager.put("ProgressBar.selectionBackground", this.pbbgcol);
+		def.put("ProgressBar[Enabled].backgroundPainter",
+				new ProgressBarPainter(this.pbbgcol));
+		def.put("ProgressBar[Enabled+Finished].backgroundPainter",
+				new ProgressBarPainter(this.pbbgcol));
 
 		def.put("ToolTip.textForeground", this.tooltptxtcol);
 		def.put("ToolTip[Enabled].backgroundPainter",
@@ -236,7 +130,7 @@ public class LookAndFeel
 	 * @throws IllegalAccessException
 	 * @throws UnsupportedLookAndFeelException
 	 */
-	public void setLookAndFeel(String lookAndFeel)
+	public void setLookAndFeelName(String lookAndFeel)
 			throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException, UnsupportedLookAndFeelException
 	{
@@ -255,9 +149,12 @@ public class LookAndFeel
 	 */
 	public void setButton(Color background, Color foreground, Font font)
 	{
-		def.put("Button.background", background);
-		def.put("Button.font", font);
-		def.put("Button.textForeground", foreground);
+		if (background != null)
+			this.bttbgcol = background;
+		if (foreground != null)
+			this.bttfgcol = foreground;
+		if (font != null)
+			this.bttft = font;
 	}
 
 	/**
@@ -272,7 +169,8 @@ public class LookAndFeel
 	 */
 	public void setComboBox(Color background, Color foreground, Font font)
 	{
-		this.setComboBox(background, foreground, background, foreground, font);
+		this.setComboBox(background, foreground, background.darker(),
+				foreground, font);
 	}
 
 	/**
@@ -293,19 +191,15 @@ public class LookAndFeel
 			Color selectedBackground, Color selectedForeground, Font font)
 	{
 		if (background != null)
-			UIManager.put("ComboBox.background",
-					new ColorUIResource(background));
+			this.cbbgcol = background;
 		if (foreground != null)
-			UIManager.put("ComboBox.foreground",
-					new ColorUIResource(foreground));
+			this.cbfgcol = foreground;
 		if (selectedBackground != null)
-			UIManager.put("ComboBox.selectionBackground", new ColorUIResource(
-					selectedBackground));
+			this.cbselbgcol = selectedBackground;
 		if (selectedForeground != null)
-			UIManager.put("ComboBox.selectionForeground", new ColorUIResource(
-					selectedForeground));
+			this.cbselfgcol = selectedForeground;
 		if (font != null)
-			def.put("ComboBox.font", font);
+			this.cbft = font;
 	}
 
 	/**
@@ -321,25 +215,11 @@ public class LookAndFeel
 	public void setProgressBar(Color foreground, Color background, Font font)
 	{
 		if (foreground != null)
-		{
-			UIManager.put("ProgressBar.foreground", foreground);
-			UIManager.put("ProgressBar.selectionForeground", foreground);
-			def.put("ProgressBar[Enabled].foregroundPainter",
-					new ProgressBarPainter(foreground));
-			def.put("ProgressBar[Enabled+Finished].foregroundPainter",
-					new ProgressBarPainter(foreground));
-		}
+			this.pbfgcol = foreground;
 		if (background != null)
-		{
-			UIManager.put("ProgressBar.background", background);
-			UIManager.put("ProgressBar.selectionBackground", background);
-			def.put("ProgressBar[Enabled].backgroundPainter",
-					new ProgressBarPainter(background));
-			def.put("ProgressBar[Enabled+Finished].backgroundPainter",
-					new ProgressBarPainter(background));
-		}
+			this.pbbgcol = background;
 		if (font != null)
-			def.put("ProgressBar.font", font);
+			this.pbft = font;
 	}
 
 	/**
@@ -358,12 +238,13 @@ public class LookAndFeel
 			Font font)
 	{
 		if (foreground != null)
-			def.put("ToolTip.textForeground", foreground);
-		if (background != null && border != null)
-			def.put("ToolTip[Enabled].backgroundPainter",
-					new ToolTipBackgroundPainter(1, background, border));
+			this.tooltptxtcol = foreground;
+		if (background != null)
+			this.tooltpbg = background;
+		if (border != null)
+			this.tooltpborder = border;
 		if (font != null)
-			def.put("ToolTip.font", font);
+			this.tooltptxtft = font;
 	}
 
 	public void setContol(Color color)
