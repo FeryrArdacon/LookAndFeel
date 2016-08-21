@@ -108,15 +108,15 @@ public class LookAndFeel
 		UIManager.put("ProgressBar.foreground", this.pbfgcol);
 		UIManager.put("ProgressBar.selectionForeground", this.pbfgcol);
 		this.def.put("ProgressBar[Enabled].foregroundPainter",
-				new ProgressBarPainter(this.pbfgcol, null));
+				new ProgressBarPainter(this.pbfgcol, null, true));
 		this.def.put("ProgressBar[Enabled+Finished].foregroundPainter",
-				new ProgressBarPainter(this.pbfgcol, null));
+				new ProgressBarPainter(this.pbfgcol, null, true));
 		UIManager.put("ProgressBar.background", this.pbbgcol);
 		UIManager.put("ProgressBar.selectionBackground", this.pbbgcol);
 		this.def.put("ProgressBar[Enabled].backgroundPainter",
-				new ProgressBarPainter(this.pbbgcol, this.pbborder));
+				new ProgressBarPainter(this.pbbgcol, this.pbborder, false));
 		this.def.put("ProgressBar[Enabled+Finished].backgroundPainter",
-				new ProgressBarPainter(this.pbbgcol, this.pbborder));
+				new ProgressBarPainter(this.pbbgcol, this.pbborder, false));
 		
 		this.def.put("ToolTip.textForeground", this.tooltptxtcol);
 		this.def.put("ToolTip[Enabled].backgroundPainter",

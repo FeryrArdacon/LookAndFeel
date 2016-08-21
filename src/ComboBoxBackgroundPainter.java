@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 
 import javax.swing.JComponent;
@@ -50,7 +51,22 @@ public class ComboBoxBackgroundPainter extends AbstractLookAndFeelRegionPainter
 	
 	private void paintBackground(Graphics2D g, int width, int height)
 	{
-		g.setColor(this.fillColor);
+		Color darkerFillColor = new Color(this.fillColor.getRed() - 10 < 0 ? 0
+				: this.fillColor.getRed() - 10,
+				this.fillColor.getGreen() - 10 < 0 ? 0 : this.fillColor
+						.getGreen() - 10, this.fillColor.getBlue() - 10 < 0 ? 0
+						: this.fillColor.getBlue() - 10), brighterFillColor = new Color(
+				this.fillColor.getRed() + 10 > 255 ? 255
+						: this.fillColor.getRed() + 10,
+				this.fillColor.getGreen() + 10 > 0 ? 255 : this.fillColor
+						.getGreen() + 10,
+				this.fillColor.getBlue() + 10 > 0 ? 255 : this.fillColor
+						.getBlue() + 10);
+		
+		GradientPaint gp = new GradientPaint(width / 2, 0, brighterFillColor,
+				width / 2, height, darkerFillColor);
+		
+		g.setPaint(gp);
 		g.fillRoundRect(3, 3, width - 5, height - 5, 10, 10);
 	}
 	
@@ -64,7 +80,24 @@ public class ComboBoxBackgroundPainter extends AbstractLookAndFeelRegionPainter
 	
 	private void paintArrowArea(Graphics2D g, int width, int height)
 	{
-		g.setColor(this.arrowAreaColor);
+		Color darkerFillColor = new Color(
+				this.arrowAreaColor.getRed() - 10 < 0 ? 0
+						: this.arrowAreaColor.getRed() - 10,
+				this.arrowAreaColor.getGreen() - 10 < 0 ? 0
+						: this.arrowAreaColor.getGreen() - 10,
+				this.arrowAreaColor.getBlue() - 10 < 0 ? 0
+						: this.arrowAreaColor.getBlue() - 10), brighterFillColor = new Color(
+				this.arrowAreaColor.getRed() + 10 > 255 ? 255
+						: this.arrowAreaColor.getRed() + 10,
+				this.arrowAreaColor.getGreen() + 10 > 0 ? 255
+						: this.arrowAreaColor.getGreen() + 10,
+				this.arrowAreaColor.getBlue() + 10 > 0 ? 255
+						: this.arrowAreaColor.getBlue() + 10);
+		
+		GradientPaint gp = new GradientPaint(width / 2, 0, brighterFillColor,
+				width / 2, height, darkerFillColor);
+		
+		g.setPaint(gp);
 		g.fillRoundRect(width - 20, 3, 18, height - 5, 10, 10);
 		g.fillRect(width - 20, 3, 5, height - 5);
 		
