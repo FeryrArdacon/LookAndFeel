@@ -17,25 +17,25 @@ import javax.swing.plaf.ColorUIResource;
 public class LookAndFeel
 {
 	private UIDefaults def = null;
-
+	
 	private Map<Object, Object> keyValueMap = new HashMap<Object, Object>();
-
+	
 	public static final String NIMBUS = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
-
+	
 	private String lookAndFeelName = NIMBUS;
-
+	
 	private Color bttbgcol = Color.BLUE, bttfgcol = Color.WHITE,
 			control = Color.WHITE, tooltptxtcol = Color.BLACK,
 			tooltpbg = Color.WHITE, tooltpborder = Color.DARK_GRAY,
 			pbfgcol = Color.BLUE, pbbgcol = new Color(235, 235, 235),
 			cbbgcol = Color.WHITE, cbfgcol = Color.BLACK,
 			cbselbgcol = Color.BLUE, cbselfgcol = Color.WHITE,
-			pbborder = Color.GRAY;
-	private Font bttft = new Font("Tahoma", Font.BOLD, 12),
-			cbft = new Font("Tahoma", Font.BOLD, 12),
-			pbft = new Font("Tahoma", Font.BOLD, 12),
-			tooltptxtft = new Font("Tahoma", Font.PLAIN, 12);
-
+			pbborder = Color.GRAY, labtxtcol = Color.BLACK;
+	private Font bttft = new Font("Tahoma", Font.BOLD, 12), cbft = new Font(
+			"Tahoma", Font.BOLD, 12), pbft = new Font("Tahoma", Font.BOLD, 12),
+			tooltptxtft = new Font("Tahoma", Font.PLAIN, 12), labft = new Font(
+					"Tahoma", Font.PLAIN, 12);
+	
 	/**
 	 * Setzt ein Standard LookAndFeel
 	 */
@@ -43,7 +43,7 @@ public class LookAndFeel
 	{
 		super();
 	}
-
+	
 	/**
 	 * Setzt ein Standard LookAndFeel
 	 * 
@@ -56,7 +56,7 @@ public class LookAndFeel
 		if (lookAndFeel != null && !lookAndFeel.equals(""))
 			this.lookAndFeelName = lookAndFeel;
 	}
-
+	
 	/**
 	 * Setzt ein LookAndFeel mit den übergebenen UIDefaults. Wird NULL
 	 * übergeben, werden die Standardwerte benutzt.
@@ -69,7 +69,7 @@ public class LookAndFeel
 		if (def != null)
 			this.def = def;
 	}
-
+	
 	/**
 	 * Setzt die Einstellungen für Buttons, Comboboxen, Progressbars, Tooltips
 	 * und Controls in Kraft
@@ -83,28 +83,27 @@ public class LookAndFeel
 			{
 				UIManager.setLookAndFeel(this.lookAndFeelName);
 			} catch (ClassNotFoundException | InstantiationException
-					| IllegalAccessException
-					| UnsupportedLookAndFeelException e)
+					| IllegalAccessException | UnsupportedLookAndFeelException e)
 			{
 				e.printStackTrace();
 				return;
 			}
-
+			
 			this.def = UIManager.getLookAndFeelDefaults();
 		}
-
+		
 		this.def.put("Button.background", this.bttbgcol);
 		this.def.put("Button.font", this.bttft);
 		this.def.put("Button.textForeground", this.bttfgcol);
-
+		
 		this.def.put("ComboBox.font", this.cbft);
 		UIManager.put("ComboBox.background", new ColorUIResource(this.cbbgcol));
 		UIManager.put("ComboBox.foreground", new ColorUIResource(this.cbfgcol));
-		UIManager.put("ComboBox.selectionBackground",
-				new ColorUIResource(this.cbselbgcol));
-		UIManager.put("ComboBox.selectionForeground",
-				new ColorUIResource(this.cbselfgcol));
-
+		UIManager.put("ComboBox.selectionBackground", new ColorUIResource(
+				this.cbselbgcol));
+		UIManager.put("ComboBox.selectionForeground", new ColorUIResource(
+				this.cbselfgcol));
+		
 		this.def.put("ProgressBar.font", this.pbft);
 		UIManager.put("ProgressBar.foreground", this.pbfgcol);
 		UIManager.put("ProgressBar.selectionForeground", this.pbfgcol);
@@ -118,18 +117,31 @@ public class LookAndFeel
 				new ProgressBarPainter(this.pbbgcol, this.pbborder));
 		this.def.put("ProgressBar[Enabled+Finished].backgroundPainter",
 				new ProgressBarPainter(this.pbbgcol, this.pbborder));
-
+		
 		this.def.put("ToolTip.textForeground", this.tooltptxtcol);
 		this.def.put("ToolTip[Enabled].backgroundPainter",
 				new ToolTipBackgroundPainter(1, this.tooltpbg,
 						this.tooltpborder));
 		this.def.put("ToolTip.font", this.tooltptxtft);
-
+		
+		this.def.put("Label.foreground", this.labtxtcol);
+		this.def.put("Label.font", this.labft);
+		
 		UIManager.put("control", this.control);
-
+		
+		def.put("ComboBox[Enabled].backgroundPainter",
+				new ComboBoxBackgroundPainter(Color.MAGENTA, Color.GRAY,
+						Color.RED));
+		def.put("ComboBox[Focused+Pressed].backgroundPainter",
+				new ComboBoxBackgroundPainter(Color.CYAN, Color.GRAY,
+						Color.BLUE));
+		def.put("ComboBox[Focused].backgroundPainter",
+				new ComboBoxBackgroundPainter(Color.RED, Color.GRAY,
+						Color.GREEN));
+		
 		this.def.putAll(this.keyValueMap);
 	}
-
+	
 	/**
 	 * Setzt das übergebene Java-Standard LookAndFeel
 	 * 
@@ -147,7 +159,7 @@ public class LookAndFeel
 		if (lookAndFeelName != null)
 			this.lookAndFeelName = lookAndFeelName;
 	}
-
+	
 	/**
 	 * Setzt das Aussehen des Buttons
 	 * 
@@ -167,7 +179,23 @@ public class LookAndFeel
 		if (font != null)
 			this.bttft = font;
 	}
-
+	
+	/**
+	 * Setzt das Aussehen des Labels
+	 * 
+	 * @param foreground
+	 *            Textfarbe
+	 * @param font
+	 *            Schrifteinstellungen
+	 */
+	public void setLabel(Color foreground, Font font)
+	{
+		if (foreground != null)
+			this.labtxtcol = foreground;
+		if (font != null)
+			this.labft = font;
+	}
+	
 	/**
 	 * Setzt das Aussehen der Combobox
 	 * 
@@ -183,7 +211,7 @@ public class LookAndFeel
 		this.setComboBox(background, foreground, background.darker(),
 				foreground, font);
 	}
-
+	
 	/**
 	 * Setzt das Aussehen der Combobox
 	 * 
@@ -212,7 +240,7 @@ public class LookAndFeel
 		if (font != null)
 			this.cbft = font;
 	}
-
+	
 	/**
 	 * Setzt das Aussehen der ProgressBar
 	 * 
@@ -223,8 +251,8 @@ public class LookAndFeel
 	 * @param font
 	 *            Schrifteinstellungen
 	 */
-	public void setProgressBar(Color foreground, Color background, Color border,
-			Font font)
+	public void setProgressBar(Color foreground, Color background,
+			Color border, Font font)
 	{
 		if (foreground != null)
 			this.pbfgcol = foreground;
@@ -235,7 +263,7 @@ public class LookAndFeel
 		if (font != null)
 			this.pbft = font;
 	}
-
+	
 	/**
 	 * Setzt das Aussehen der ToolTips
 	 * 
@@ -260,12 +288,12 @@ public class LookAndFeel
 		if (font != null)
 			this.tooltptxtft = font;
 	}
-
+	
 	public void setContol(Color color)
 	{
 		UIManager.put("control", color);
 	}
-
+	
 	/**
 	 * Ruft die PUT()-Methode der UIDefaults auf
 	 * 
@@ -278,7 +306,7 @@ public class LookAndFeel
 	{
 		this.keyValueMap.put(key, value);
 	}
-
+	
 	/**
 	 * Ruft die PUTALL()-Methode der UIDefaults auf
 	 * 

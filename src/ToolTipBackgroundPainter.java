@@ -13,10 +13,12 @@ final class ToolTipBackgroundPainter extends AbstractLookAndFeelRegionPainter
 	// this painter will paint. These are used when creating a new instance
 	// of ToolTipPainter to determine which region/state is being painted
 	// by that instance.
-	static final int BACKGROUND_ENABLED = 1;
-
+	private static final int BACKGROUND_ENABLED = 1;
+	// private static final String ToolTipPaintContext =
+	// "ToolTip[Enabled].backgroundPainter";
+	
 	private int state; // refers to one of the static final ints above
-
+	
 	// the following 4 variables are reused during the painting code of the
 	// layers
 	@SuppressWarnings("unused")
@@ -27,7 +29,7 @@ final class ToolTipBackgroundPainter extends AbstractLookAndFeelRegionPainter
 			0, 0);
 	@SuppressWarnings("unused")
 	private Ellipse2D ellipse = new Ellipse2D.Float(0, 0, 0, 0);
-
+	
 	// All Colors used for painting are stored here. Ideally, only those
 	// colors being used
 	// by a particular instance of ToolTipPainter would be created. For the
@@ -35,22 +37,22 @@ final class ToolTipBackgroundPainter extends AbstractLookAndFeelRegionPainter
 	// however, all are created for each instance.
 	private Color color1 = decodeColor("nimbusBorder", 0.0f, 0.0f, 0.0f, 0);
 	private Color color2 = decodeColor("info", -0.8f, -0.8f, -0.8f, 0);
-
+	
 	// Array of current component colors, updated in each paint call
 	@SuppressWarnings("unused")
 	private Object[] componentColors;
-
+	
 	public ToolTipBackgroundPainter(int state, Color info, Color nimbusBorder)
 	{
 		super();
 		this.state = state;
-
+		
 		if (nimbusBorder != null)
 			this.color1 = nimbusBorder;
 		if (info != null)
 			this.color2 = info;
 	}
-
+	
 	@Override
 	protected void doPaint(Graphics2D g, JComponent c, int width, int height,
 			Object[] extendedCacheKeys)
@@ -66,12 +68,14 @@ final class ToolTipBackgroundPainter extends AbstractLookAndFeelRegionPainter
 		case BACKGROUND_ENABLED:
 			paintBackgroundEnabled(g);
 			break;
-
+		
 		}
 	}
-
+	
 	private void paintBackgroundEnabled(Graphics2D g)
 	{
+		this.setRenderingHints(g);
+		
 		rect = decodeRect1();
 		g.setPaint(color1);
 		g.fill(rect);
@@ -87,9 +91,8 @@ final class ToolTipBackgroundPainter extends AbstractLookAndFeelRegionPainter
 		rect = decodeRect5();
 		g.setPaint(color2);
 		g.fill(rect);
-
 	}
-
+	
 	private Rectangle2D decodeRect1()
 	{
 		rect.setRect(decodeX(2.0f), // x
@@ -98,7 +101,7 @@ final class ToolTipBackgroundPainter extends AbstractLookAndFeelRegionPainter
 				decodeY(2.0f) - decodeY(1.0f)); // height
 		return rect;
 	}
-
+	
 	private Rectangle2D decodeRect2()
 	{
 		rect.setRect(decodeX(0.0f), // x
@@ -107,7 +110,7 @@ final class ToolTipBackgroundPainter extends AbstractLookAndFeelRegionPainter
 				decodeY(2.0f) - decodeY(1.0f)); // height
 		return rect;
 	}
-
+	
 	private Rectangle2D decodeRect3()
 	{
 		rect.setRect(decodeX(0.0f), // x
@@ -116,7 +119,7 @@ final class ToolTipBackgroundPainter extends AbstractLookAndFeelRegionPainter
 				decodeY(3.0f) - decodeY(2.0f)); // height
 		return rect;
 	}
-
+	
 	private Rectangle2D decodeRect4()
 	{
 		rect.setRect(decodeX(0.0f), // x
@@ -125,7 +128,7 @@ final class ToolTipBackgroundPainter extends AbstractLookAndFeelRegionPainter
 				decodeY(1.0f) - decodeY(0.0f)); // height
 		return rect;
 	}
-
+	
 	private Rectangle2D decodeRect5()
 	{
 		rect.setRect(decodeX(1.0f), // x

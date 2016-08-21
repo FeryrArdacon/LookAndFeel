@@ -5,19 +5,22 @@ import javax.swing.JComponent;
 
 final class ProgressBarPainter extends AbstractLookAndFeelRegionPainter
 {
-
+	
 	private Color fillColor, borderColor;
-
+	
 	public ProgressBarPainter(Color fillColor, Color borderColor)
 	{
+		super();
 		this.fillColor = fillColor;
 		this.borderColor = borderColor;
 	}
-
+	
 	@Override
 	public void doPaint(Graphics2D g, JComponent c, int width, int height,
 			Object[] extendedCacheKeys)
 	{
+		this.setRenderingHints(g);
+		
 		if (this.borderColor != null)
 		{
 			g.setColor(this.borderColor.brighter().brighter());
@@ -25,8 +28,8 @@ final class ProgressBarPainter extends AbstractLookAndFeelRegionPainter
 			g.setColor(this.borderColor);
 			g.drawRoundRect(2, 2, width - 4, height - 4, 10, 10);
 		}
-
+		
 		g.setColor(this.fillColor);
-		g.fillRoundRect(3, 3, width - 6, height - 6, 10, 10);
+		g.fillRoundRect(3, 3, width - 5, height - 5, 10, 10);
 	}
 }
