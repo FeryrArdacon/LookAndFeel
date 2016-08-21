@@ -51,22 +51,7 @@ public class ComboBoxBackgroundPainter extends AbstractLookAndFeelRegionPainter
 	
 	private void paintBackground(Graphics2D g, int width, int height)
 	{
-		Color darkerFillColor = new Color(this.fillColor.getRed() - 10 < 0 ? 0
-				: this.fillColor.getRed() - 10,
-				this.fillColor.getGreen() - 10 < 0 ? 0 : this.fillColor
-						.getGreen() - 10, this.fillColor.getBlue() - 10 < 0 ? 0
-						: this.fillColor.getBlue() - 10), brighterFillColor = new Color(
-				this.fillColor.getRed() + 10 > 255 ? 255
-						: this.fillColor.getRed() + 10,
-				this.fillColor.getGreen() + 10 > 0 ? 255 : this.fillColor
-						.getGreen() + 10,
-				this.fillColor.getBlue() + 10 > 0 ? 255 : this.fillColor
-						.getBlue() + 10);
-		
-		GradientPaint gp = new GradientPaint(width / 2, 0, brighterFillColor,
-				width / 2, height, darkerFillColor);
-		
-		g.setPaint(gp);
+		g.setColor(this.fillColor);
 		g.fillRoundRect(3, 3, width - 5, height - 5, 10, 10);
 	}
 	

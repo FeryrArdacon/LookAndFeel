@@ -4,8 +4,12 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import javax.swing.JComponent;
+import javax.swing.UIManager;
+import javax.swing.plaf.nimbus.AbstractRegionPainter;
 
 /**
  * Zeichnet den ToolTip-Hintergrund
@@ -21,7 +25,8 @@ final class ToolTipBackgroundPainter extends AbstractLookAndFeelRegionPainter
 	// this painter will paint. These are used when creating a new instance
 	// of ToolTipPainter to determine which region/state is being painted
 	// by that instance.
-	private static final int BACKGROUND_ENABLED = 1;
+	static final int BACKGROUND_ENABLED = 1;
+	static final int BACKGROUND_DISABLED = 0;
 	// private static final String ToolTipPaintContext =
 	// "ToolTip[Enabled].backgroundPainter";
 	
@@ -66,8 +71,33 @@ final class ToolTipBackgroundPainter extends AbstractLookAndFeelRegionPainter
 		super();
 		this.state = state;
 		
+		// refelction for getting the PaintContext
+		AbstractRegionPainter abstractPainter = (AbstractRegionPainter) UIManager
+				.get("ToolTip[Enabled].backgroundPainter");
+		Class<?> clazz = abstractPainter.getClass();
+		Method protectedMethod = null;
+		try
+		{
+			protectedMethod = clazz.getDeclaredMethod("getPaintContext");
+		} catch (NoSuchMethodException | SecurityException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		protectedMethod.setAccessible(true);
+		try
+		{
+			this.ctx = (PaintContext) protectedMethod.invoke(abstractPainter);
+		} catch (IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		if (border != null)
 			this.color1 = border;
+		System.out.println(border);
 		if (background != null)
 			this.color2 = background;
 	}

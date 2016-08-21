@@ -1,5 +1,4 @@
 import java.awt.BorderLayout;
-import java.awt.Color;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -15,8 +14,6 @@ public class Test
 			UnsupportedLookAndFeelException
 	{
 		LookAndFeel laf = new LookAndFeel();
-		laf.setComboBox(Color.BLACK, Color.WHITE, null);
-		laf.setToolTip(Color.WHITE, Color.DARK_GRAY, Color.BLACK, null);
 		laf.setLookAndFeel();
 		
 		JFrame frame = new JFrame("Test");
@@ -27,8 +24,11 @@ public class Test
 		JComboBox<Object> cb = new JComboBox<Object>();
 		cb.setToolTipText("Test ToolTip");
 		
-		frame.add(cb, BorderLayout.NORTH);
-		frame.add(pb, BorderLayout.CENTER);
+		cb.addItem("Hallo");
+		cb.addItem("Test");
+		
+		frame.add(cb, BorderLayout.CENTER);
+		frame.add(pb, BorderLayout.NORTH);
 		frame.add(new JTextField(), BorderLayout.SOUTH);
 		
 		frame.pack();

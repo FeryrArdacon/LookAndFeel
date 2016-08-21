@@ -30,7 +30,12 @@ public class LookAndFeel
 			pbfgcol = Color.BLUE, pbbgcol = new Color(235, 235, 235),
 			cbbgcol = Color.WHITE, cbfgcol = Color.BLACK,
 			cbselbgcol = Color.BLUE, cbselfgcol = Color.WHITE,
-			pbborder = Color.GRAY, labtxtcol = Color.BLACK;
+			pbborder = Color.GRAY, labtxtcol = Color.BLACK,
+			
+			cbbttcol = new Color(220, 220, 255), cbdisbgcol = new Color(230,
+					230, 230), cbdisfgcol = Color.DARK_GRAY,
+			cbdisbttcol = new Color(225, 225, 235),
+			cbpressedbttcol = new Color(190, 190, 255), cbborder = Color.GRAY;
 	private Font bttft = new Font("Tahoma", Font.BOLD, 12), cbft = new Font(
 			"Tahoma", Font.BOLD, 12), pbft = new Font("Tahoma", Font.BOLD, 12),
 			tooltptxtft = new Font("Tahoma", Font.PLAIN, 12), labft = new Font(
@@ -103,6 +108,48 @@ public class LookAndFeel
 				this.cbselbgcol));
 		UIManager.put("ComboBox.selectionForeground", new ColorUIResource(
 				this.cbselfgcol));
+		def.put("ComboBox[Disabled+Editable].backgroundPainter",
+				new ComboBoxBackgroundPainter(this.cbdisbgcol, this.cbborder,
+						this.cbdisbttcol));
+		def.put("ComboBox[Disabled+Pressed].backgroundPainter",
+				new ComboBoxBackgroundPainter(this.cbdisbgcol, this.cbborder,
+						this.cbdisbttcol));
+		def.put("ComboBox[Disabled].backgroundPainter",
+				new ComboBoxBackgroundPainter(this.cbdisbgcol, this.cbborder,
+						this.cbdisbttcol));
+		def.put("ComboBox[Editable+Enabled].backgroundPainter",
+				new ComboBoxBackgroundPainter(this.cbbgcol, this.cbborder,
+						this.cbbttcol));
+		def.put("ComboBox[Editable+Focused].backgroundPainter",
+				new ComboBoxBackgroundPainter(this.cbbgcol, this.cbborder,
+						this.cbbttcol));
+		def.put("ComboBox[Editable+MouseOver].backgroundPainter",
+				new ComboBoxBackgroundPainter(this.cbbgcol, this.cbborder,
+						this.cbbttcol));
+		def.put("ComboBox[Editable+Pressed].backgroundPainter",
+				new ComboBoxBackgroundPainter(this.cbbgcol, this.cbborder,
+						this.cbpressedbttcol));
+		def.put("ComboBox[Enabled+Selected].backgroundPainter",
+				new ComboBoxBackgroundPainter(this.cbselbgcol, this.cbborder,
+						this.cbbttcol));
+		def.put("ComboBox[Enabled].backgroundPainter",
+				new ComboBoxBackgroundPainter(this.cbbgcol, this.cbborder,
+						this.cbbttcol));
+		def.put("ComboBox[Focused+MouseOver].backgroundPainter",
+				new ComboBoxBackgroundPainter(this.cbbgcol, this.cbborder,
+						this.cbbttcol));
+		def.put("ComboBox[Focused+Pressed].backgroundPainter",
+				new ComboBoxBackgroundPainter(this.cbbgcol, this.cbborder,
+						this.cbpressedbttcol));
+		def.put("ComboBox[Focused].backgroundPainter",
+				new ComboBoxBackgroundPainter(this.cbbgcol, this.cbborder,
+						this.cbbttcol));
+		def.put("ComboBox[MouseOver].backgroundPainter",
+				new ComboBoxBackgroundPainter(this.cbbgcol, this.cbborder,
+						this.cbbttcol));
+		def.put("ComboBox[Pressed].backgroundPainter",
+				new ComboBoxBackgroundPainter(this.cbbgcol, this.cbborder,
+						this.cbpressedbttcol));
 		
 		this.def.put("ProgressBar.font", this.pbft);
 		UIManager.put("ProgressBar.foreground", this.pbfgcol);
@@ -120,24 +167,15 @@ public class LookAndFeel
 		
 		this.def.put("ToolTip.textForeground", this.tooltptxtcol);
 		this.def.put("ToolTip[Enabled].backgroundPainter",
-				new ToolTipBackgroundPainter(1, this.tooltpbg,
-						this.tooltpborder));
+				new ToolTipBackgroundPainter(
+						ToolTipBackgroundPainter.BACKGROUND_ENABLED,
+						this.tooltpbg, this.tooltpborder));
 		this.def.put("ToolTip.font", this.tooltptxtft);
 		
 		this.def.put("Label.foreground", this.labtxtcol);
 		this.def.put("Label.font", this.labft);
 		
 		UIManager.put("control", this.control);
-		
-		def.put("ComboBox[Enabled].backgroundPainter",
-				new ComboBoxBackgroundPainter(Color.MAGENTA, Color.GRAY,
-						Color.RED));
-		def.put("ComboBox[Focused+Pressed].backgroundPainter",
-				new ComboBoxBackgroundPainter(Color.CYAN, Color.GRAY,
-						Color.BLUE));
-		def.put("ComboBox[Focused].backgroundPainter",
-				new ComboBoxBackgroundPainter(Color.RED, Color.GRAY,
-						Color.GREEN));
 		
 		this.def.putAll(this.keyValueMap);
 	}
@@ -206,10 +244,11 @@ public class LookAndFeel
 	 * @param font
 	 *            Schrifteinstellungen
 	 */
-	public void setComboBox(Color background, Color foreground, Font font)
+	public void setComboBox(Color background, Color foreground, Color button,
+			Color border, Font font)
 	{
 		this.setComboBox(background, foreground, background.darker(),
-				foreground, font);
+				foreground, button, border, font);
 	}
 	
 	/**
@@ -227,18 +266,37 @@ public class LookAndFeel
 	 *            Schrifteinstellungen
 	 */
 	public void setComboBox(Color background, Color foreground,
-			Color selectedBackground, Color selectedForeground, Font font)
+			Color selectedBackground, Color selectedForeground, Color button,
+			Color border, Font font)
 	{
 		if (background != null)
+		{
 			this.cbbgcol = background;
+			this.cbdisbgcol = new Color(background.getRed(),
+					background.getGreen(), background.getBlue(), 220);
+		}
 		if (foreground != null)
+		{
 			this.cbfgcol = foreground;
+			this.cbdisfgcol = new Color(foreground.getRed(),
+					foreground.getGreen(), foreground.getBlue(), 220);
+		}
 		if (selectedBackground != null)
 			this.cbselbgcol = selectedBackground;
 		if (selectedForeground != null)
 			this.cbselfgcol = selectedForeground;
 		if (font != null)
 			this.cbft = font;
+		if (button != null)
+		{
+			this.cbbttcol = button;
+			this.cbdisbttcol = new Color(button.getRed(), button.getGreen(),
+					button.getBlue(), 220);
+			this.cbpressedbttcol = new Color(button.getRed(),
+					button.getGreen(), button.getBlue()).darker().darker();
+		}
+		if (border != null)
+			this.cbborder = border;
 	}
 	
 	/**

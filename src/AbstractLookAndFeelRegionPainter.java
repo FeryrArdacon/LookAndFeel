@@ -15,7 +15,7 @@ import javax.swing.plaf.nimbus.AbstractRegionPainter;
 abstract class AbstractLookAndFeelRegionPainter extends AbstractRegionPainter
 {
 	
-	private PaintContext ctx = null;
+	protected PaintContext ctx = null;
 	
 	public AbstractLookAndFeelRegionPainter()
 	{
