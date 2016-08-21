@@ -7,6 +7,14 @@ import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JComponent;
 
+/**
+ * Zeichnet den ToolTip-Hintergrund
+ * 
+ * @author 
+ *         http://www.javafind.net/gate.jsp?q=/library/36/java6_full_apidocs/src-
+ *         html/com/sun/java/swing/plaf/nimbus/ToolTipPainter.html#line.17
+ *
+ */
 final class ToolTipBackgroundPainter extends AbstractLookAndFeelRegionPainter
 {
 	// package private integers representing the available states that
@@ -42,17 +50,33 @@ final class ToolTipBackgroundPainter extends AbstractLookAndFeelRegionPainter
 	@SuppressWarnings("unused")
 	private Object[] componentColors;
 	
-	public ToolTipBackgroundPainter(int state, Color info, Color nimbusBorder)
+	/**
+	 * Erzeugt einen ToolTipBackgroundPainter
+	 * 
+	 * @param state
+	 *            Hintergrund-Status (Hintergund 'Ein' == 1; Hintergrund 'Aus'
+	 *            <> 1)
+	 * @param background
+	 *            Hintergrundfarbe des ToolTips
+	 * @param border
+	 *            Farbe des Rahmen des ToolTips
+	 */
+	public ToolTipBackgroundPainter(int state, Color background, Color border)
 	{
 		super();
 		this.state = state;
 		
-		if (nimbusBorder != null)
-			this.color1 = nimbusBorder;
-		if (info != null)
-			this.color2 = info;
+		if (border != null)
+			this.color1 = border;
+		if (background != null)
+			this.color2 = background;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.swing.plaf.nimbus.AbstractRegionPainter#doPaint()
+	 */
 	@Override
 	protected void doPaint(Graphics2D g, JComponent c, int width, int height,
 			Object[] extendedCacheKeys)

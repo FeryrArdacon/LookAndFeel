@@ -3,11 +3,25 @@ import java.awt.Graphics2D;
 
 import javax.swing.JComponent;
 
+/**
+ * Zeichnet die Regionen der ProressBar
+ * 
+ * @author Patrick
+ *
+ */
 final class ProgressBarPainter extends AbstractLookAndFeelRegionPainter
 {
 	
 	private Color fillColor, borderColor;
 	
+	/**
+	 * Erzeugt einen ProgressBarPainter
+	 * 
+	 * @param fillColor
+	 *            Farbe
+	 * @param borderColor
+	 *            Farb des Rahmen der ProgressBar
+	 */
 	public ProgressBarPainter(Color fillColor, Color borderColor)
 	{
 		super();
@@ -15,6 +29,11 @@ final class ProgressBarPainter extends AbstractLookAndFeelRegionPainter
 		this.borderColor = borderColor;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.swing.plaf.nimbus.AbstractRegionPainter#doPaint()
+	 */
 	@Override
 	public void doPaint(Graphics2D g, JComponent c, int width, int height,
 			Object[] extendedCacheKeys)

@@ -3,10 +3,26 @@ import java.awt.Graphics2D;
 
 import javax.swing.JComponent;
 
+/**
+ * Zeichnet den ComboBox-Hintergrund
+ * 
+ * @author Patrick
+ *
+ */
 public class ComboBoxBackgroundPainter extends AbstractLookAndFeelRegionPainter
 {
 	private Color fillColor, borderColor, arrowAreaColor;
 	
+	/**
+	 * Erzeugt einen ComboBoxBackgroundPainter
+	 * 
+	 * @param fillColor
+	 *            Farbe des Hintergrunds
+	 * @param borderColor
+	 *            Farbe des Rahmens der ComboBox
+	 * @param arrowAreaColor
+	 *            Hintergrundfarbe des Aufklapp-Buttons
+	 */
 	public ComboBoxBackgroundPainter(Color fillColor, Color borderColor,
 			Color arrowAreaColor)
 	{
@@ -16,6 +32,11 @@ public class ComboBoxBackgroundPainter extends AbstractLookAndFeelRegionPainter
 		this.arrowAreaColor = arrowAreaColor;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.swing.plaf.nimbus.AbstractRegionPainter#doPaint()
+	 */
 	@Override
 	protected void doPaint(Graphics2D g, JComponent c, int width, int height,
 			Object[] extendedCacheKeys)

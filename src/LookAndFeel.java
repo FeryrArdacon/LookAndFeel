@@ -11,7 +11,7 @@ import javax.swing.plaf.ColorUIResource;
 /**
  * Ändert das Design.
  * 
- * @author Feryr
+ * @author Patrick
  *
  */
 public class LookAndFeel

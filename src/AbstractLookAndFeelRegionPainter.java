@@ -7,10 +7,8 @@ import java.util.Map;
 import javax.swing.plaf.nimbus.AbstractRegionPainter;
 
 /**
+ * Oberklasse für die Painter des LookAndFeels
  * 
- */
-
-/**
  * @author Patrick
  *
  */
@@ -19,9 +17,6 @@ abstract class AbstractLookAndFeelRegionPainter extends AbstractRegionPainter
 	
 	private PaintContext ctx = null;
 	
-	/**
-	 * Creates object and get object of paintcontext
-	 */
 	public AbstractLookAndFeelRegionPainter()
 	{
 		
@@ -39,10 +34,10 @@ abstract class AbstractLookAndFeelRegionPainter extends AbstractRegionPainter
 	}
 	
 	/**
-	 * Sets the rendering hints for high resulution rendering
+	 * Setzt die RendringHints für hohe Qualität
 	 * 
 	 * @param g2d
-	 *            grephics object where the rendering hints will be setted
+	 *            Graphics2D Objekt, in das die RenderingHints gesetzt werden
 	 */
 	protected void setRenderingHints(Graphics2D g2d)
 	{
