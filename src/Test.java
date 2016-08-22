@@ -18,6 +18,8 @@ public class Test
 		
 		JFrame frame = new JFrame("Test");
 		
+		// frame.setUndecorated(true);
+		
 		JProgressBar pb = new JProgressBar();
 		pb.setValue(50);
 		
