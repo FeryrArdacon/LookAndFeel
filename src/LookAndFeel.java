@@ -25,12 +25,13 @@ public class LookAndFeel
 	private String lookAndFeelName = NIMBUS;
 	
 	private Color bttbgcol = Color.BLUE, bttfgcol = Color.WHITE,
-			control = Color.WHITE, tooltptxtcol = Color.BLACK,
-			tooltpbg = Color.WHITE, tooltpborder = Color.DARK_GRAY,
-			pbfgcol = Color.BLUE, pbbgcol = new Color(235, 235, 235),
-			cbbgcol = Color.WHITE, cbfgcol = Color.BLACK,
-			cbselbgcol = Color.BLUE, cbselfgcol = Color.WHITE,
-			pbborder = Color.GRAY, labtxtcol = Color.BLACK,
+			control = Color.WHITE, textForeground = Color.BLACK,
+			tooltptxtcol = Color.BLACK, tooltpbg = Color.WHITE,
+			tooltpborder = Color.DARK_GRAY, pbfgcol = Color.BLUE,
+			pbbgcol = new Color(235, 235, 235), cbbgcol = Color.WHITE,
+			cbfgcol = Color.BLACK, cbselbgcol = Color.BLUE,
+			cbselfgcol = Color.WHITE, pbborder = Color.GRAY,
+			labtxtcol = Color.BLACK,
 			
 			cbbttcol = new Color(220, 220, 255), cbdisbgcol = new Color(230,
 					230, 230), cbdisfgcol = Color.DARK_GRAY,
@@ -172,10 +173,11 @@ public class LookAndFeel
 						this.tooltpbg, this.tooltpborder));
 		this.def.put("ToolTip.font", this.tooltptxtft);
 		
-		this.def.put("Label.foreground", this.labtxtcol);
+		this.def.put("Label.foreground", new ColorUIResource(this.labtxtcol));
 		this.def.put("Label.font", this.labft);
 		
 		UIManager.put("control", this.control);
+		// UIManager.put("textForeground", this.textForeground);
 		
 		this.def.putAll(this.keyValueMap);
 	}
@@ -347,9 +349,28 @@ public class LookAndFeel
 			this.tooltptxtft = font;
 	}
 	
+	/**
+	 * Setzt die Farbe des Controls
+	 * 
+	 * @param color
+	 *            Farbe die gesetzt wird
+	 */
 	public void setContol(Color color)
 	{
-		UIManager.put("control", color);
+		if (color != null)
+			this.control = color;
+	}
+	
+	/**
+	 * Setzt die Textfarbe (wird bei Nimbus benötigt)
+	 * 
+	 * @param color
+	 *            Farbe des Textes
+	 */
+	public void setTextForeground(Color color)
+	{
+		if (color != null)
+			this.textForeground = color;
 	}
 	
 	/**

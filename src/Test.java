@@ -1,9 +1,9 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JProgressBar;
-import javax.swing.JTextField;
 import javax.swing.UnsupportedLookAndFeelException;
 
 public class Test
@@ -14,11 +14,14 @@ public class Test
 			UnsupportedLookAndFeelException
 	{
 		LookAndFeel laf = new LookAndFeel();
+		laf.setContol(Color.DARK_GRAY);
+		laf.setLabel(Color.WHITE, null);
+		// laf.setTextForeground(Color.WHITE);
 		laf.setLookAndFeel();
 		
 		JFrame frame = new JFrame("Test");
 		
-		// frame.setUndecorated(true);
+		frame.setUndecorated(true);
 		
 		JProgressBar pb = new JProgressBar();
 		pb.setValue(50);
@@ -29,9 +32,9 @@ public class Test
 		cb.addItem("Hallo");
 		cb.addItem("Test");
 		
+		frame.add(new JFrameTitlePanel(frame, false), BorderLayout.NORTH);
 		frame.add(cb, BorderLayout.CENTER);
-		frame.add(pb, BorderLayout.NORTH);
-		frame.add(new JTextField(), BorderLayout.SOUTH);
+		frame.add(pb, BorderLayout.SOUTH);
 		
 		frame.pack();
 		frame.setLocationRelativeTo(null);

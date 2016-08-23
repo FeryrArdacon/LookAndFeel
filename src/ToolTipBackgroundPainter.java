@@ -97,7 +97,6 @@ final class ToolTipBackgroundPainter extends AbstractLookAndFeelRegionPainter
 		
 		if (border != null)
 			this.color1 = border;
-		System.out.println(border);
 		if (background != null)
 			this.color2 = background;
 	}
